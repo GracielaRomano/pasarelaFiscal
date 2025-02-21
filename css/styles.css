@@ -1,0 +1,39 @@
+/* Animaciones */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos de las pestañas */
+.code-tab {
+    display: none;
+}
+
+.code-tab.active {
+    display: block;
+}
+
+.code-tab-btn {
+    color: #8C8C8C;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.code-tab-btn.active {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-bottom: 2px solid #007ACC;
+}
+
+.code-tab-btn:hover {
+    color: #ffffff;
+    background-color: #2d2d2d;
+}
+
+.hidden {
+    display: none;
+}

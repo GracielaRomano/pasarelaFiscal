@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pasarela Fiscal</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/code.css">
+    </head>
+    <body class="min-h-screen bg-gray-950 text-white">
+        <!-- Header -->
+        <header class="border-b border-gray-800 fixed w-full bg-gray-950 z-50">
+            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="text-2xl font-bold">Fiscal API</div>
+                <div class="flex gap-6 items-center">
+                    <a href="#features" class="nav-link text-gray-300 hover:text-white">Características</a>
+                    <a href="#docs" class="nav-link text-gray-300 hover:text-white">Documentación</a>
+                    <a href="#pricing" class="nav-link text-gray-300 hover:text-white">Precios</a>
+                    <a href="#contact" class="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">Contacto</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="pt-32 pb-24 text-center">
+            <div class="container mx-auto px-4">
+                <h1 class="text-5xl font-bold mb-6 fade-in">API para Servicios Fiscales</h1>
+                <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto fade-in">
+                    Integra fácilmente los servicios de ARCA y ARBA en tu aplicación. 
+                    Gestiona facturas electrónicas y documentos fiscales de forma segura.
+                </p>
+                <div class="flex gap-4 justify-center fade-in">
+                    <button class="start-btn px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
+                        Comenzar
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                    <button class="docs-btn px-6 py-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                        Ver Documentación
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Example Section -->
+        <section class="py-16 bg-gray-900" id="docs">
+            <div class="container mx-auto px-4">
+                <div class="code-container bg-[#1e1e1e] rounded-lg border border-gray-800">
+                    <div class="flex gap-2 p-4 border-b border-gray-800">
+                        <button class="code-tab-btn active px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="php">PHP</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="javascript">JavaScript</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="nodejs">Node.js</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="foxpro">Visual FoxPro</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="vb6">Visual Basic 6</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="vbnet">VB.NET</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="csharp">C#</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="delphi">Delphi</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="clarion">Clarion</button>
+                    </div>
+                    <div class="code-content p-6">
+                        <div id="php-code" class="code-tab active">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">// Ejemplo de integración con PHP</span>
+<span class="variable">$client</span> = <span class="keyword">new</span> <span class="class">FiscalApiClient</span>([
+    <span class="string">'api_key'</span> => <span class="string">'TU_API_KEY'</span>,
+    <span class="string">'environment'</span> => <span class="string">'production'</span>
+]);
+
+<span class="keyword">try</span> {
+    <span class="variable">$factura</span> = <span class="variable">$client</span>->comprobantes->crear([
+        <span class="string">'tipo_comprobante'</span> => <span class="string">'A'</span>,
+        <span class="string">'punto_venta'</span> => <span class="number">1</span>,
+        <span class="string">'concepto'</span> => <span class="number">1</span>,
+        <span class="string">'doc_tipo'</span> => <span class="number">80</span>,
+        <span class="string">'doc_nro'</span> => <span class="string">'30712345678'</span>,
+        <span class="string">'fecha'</span> => <span class="function">date</span>(<span class="string">'Y-m-d'</span>),
+        <span class="string">'imp_total'</span> => <span class="number">1000.00</span>,
+        <span class="string">'imp_neto'</span> => <span class="number">826.45</span>,
+        <span class="string">'imp_iva'</span> => <span class="number">173.55</span>
+    ]);
+
+    <span class="function">echo</span> <span class="string">"Factura creada con CAE: "</span> . <span class="variable">$factura</span>->cae;
+} <span class="keyword">catch</span> (<span class="class">FiscalApiException</span> <span class="variable">$e</span>) {
+    <span class="function">echo</span> <span class="string">"Error: "</span> . <span class="variable">$e</span>->getMessage();
+}</pre>
+                        </div>
+                        <div id="javascript-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">// Ejemplo con JavaScript</span>
+<span class="keyword">const</span> <span class="variable">fiscalApi</span> = <span class="keyword">new</span> <span class="class">FiscalApi</span>(<span class="string">'TU_API_KEY'</span>);
+
+<span class="keyword">async</span> <span class="function">function</span> <span class="function">crearFactura</span>() {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> <span class="variable">factura</span> = <span class="keyword">await</span> <span class="variable">fiscalApi</span>.comprobantes.crear({
+            <span class="variable">tipo_comprobante</span>: <span class="string">'A'</span>,
+            <span class="variable">punto_venta</span>: <span class="number">1</span>,
+            <span class="variable">concepto</span>: <span class="number">1</span>,
+            <span class="variable">doc_tipo</span>: <span class="number">80</span>,
+            <span class="variable">doc_nro</span>: <span class="string">'30712345678'</span>,
+            <span class="variable">fecha</span>: <span class="keyword">new</span> <span class="class">Date</span>().toISOString().split(<span class="string">'T'</span>)[<span class="number">0</span>],
+            <span class="variable">imp_total</span>: <span class="number">1000.00</span>,
+            <span class="variable">imp_neto</span>: <span class="number">826.45</span>,
+            <span class="variable">imp_iva</span>: <span class="number">173.55</span>
+        });
+
+        <span class="function">console</span>.log(<span class="string">'Factura creada con CAE:'</span>, <span class="variable">factura</span>.cae);
+    } <span class="keyword">catch</span> (<span class="variable">error</span>) {
+        <span class="function">console</span>.error(<span class="string">'Error:'</span>, <span class="variable">error</span>.message);
+    }
+}</pre>
+                        </div>
+                        <div id="nodejs-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">// Ejemplo con Node.js</span>
+<span class="keyword">const</span> { <span class="class">FiscalApi</span> } = <span class="function">require</span>(<span class="string">'@fiscal-api/node'</span>);
+
+<span class="keyword">const</span> <span class="variable">client</span> = <span class="keyword">new</span> <span class="class">FiscalApi</span>({
+    <span class="variable">apiKey</span>: <span class="string">'TU_API_KEY'</span>,
+    <span class="variable">environment</span>: <span class="string">'production'</span>
+});
+
+<span class="keyword">async</span> <span class="function">function</span> <span class="function">crearFactura</span>() {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> <span class="variable">factura</span> = <span class="keyword">await</span> <span class="variable">client</span>.comprobantes.crear({
+            <span class="variable">tipo_comprobante</span>: <span class="string">'A'</span>,
+            <span class="variable">punto_venta</span>: <span class="number">1</span>,
+            <span class="variable">concepto</span>: <span class="number">1</span>,
+            <span class="variable">doc_tipo</span>: <span class="number">80</span>,
+            <span class="variable">doc_nro</span>: <span class="string">'30712345678'</span>,
+            <span class="variable">fecha</span>: <span class="keyword">new</span> <span class="class">Date</span>().toISOString().split(<span class="string">'T'</span>)[<span class="number">0</span>],
+            <span class="variable">imp_total</span>: <span class="number">1000.00</span>,
+            <span class="variable">imp_neto</span>: <span class="number">826.45</span>,
+            <span class="variable">imp_iva</span>: <span class="number">173.55</span>
+        });
+
+        <span class="function">console</span>.log(<span class="string">'Factura creada con CAE:'</span>, <span class="variable">factura</span>.cae);
+    } <span class="keyword">catch</span> (<span class="variable">error</span>) {
+        <span class="function">console</span>.error(<span class="string">'Error:'</span>, <span class="variable">error</span>.message);
+    }
+}</pre>
+                        </div>
+                        <div id="foxpro-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">* Ejemplo con Visual FoxPro</span>
+<span class="keyword">#DEFINE</span> <span class="variable">CRLF</span> <span class="function">CHR</span>(<span class="number">13</span>) + <span class="function">CHR</span>(<span class="number">10</span>)
+
+<span class="keyword">DEFINE CLASS</span> <span class="class">FiscalApi</span> <span class="keyword">AS</span> <span class="class">Custom</span>
+    <span class="variable">apiKey</span> = <span class="string">""</span>
+    
+    <span class="keyword">PROCEDURE</span> <span class="function">Init</span>
+        <span class="keyword">THIS</span>.apiKey = <span class="string">"TU_API_KEY"</span>
+    <span class="keyword">ENDPROC</span>
+    
+    <span class="keyword">PROCEDURE</span> <span class="function">CrearFactura</span>
+        <span class="keyword">LOCAL</span> lcUrl, lcHeaders, lcBody, lcResponse
+        
+        lcUrl = <span class="string">"https://api.fiscal.service/v1/comprobantes"</span>
+        lcHeaders = <span class="string">"Authorization: Bearer "</span> + <span class="keyword">THIS</span>.apiKey + <span class="variable">CRLF</span> + ;
+                   <span class="string">"Content-Type: application/json"</span>
+        
+        <span class="keyword">TEXT TO</span> lcBody <span class="keyword">NOSHOW</span>
+        {
+            <span class="string">"tipo_comprobante"</span>: <span class="string">"A"</span>,
+            <span class="string">"punto_venta"</span>: <span class="number">1</span>,
+            <span class="string">"concepto"</span>: <span class="number">1</span>,
+            <span class="string">"doc_tipo"</span>: <span class="number">80</span>,
+            <span class="string">"doc_nro"</span>: <span class="string">"30712345678"</span>,
+            <span class="string">"fecha"</span>: <span class="string">"2024-02-21"</span>,
+            <span class="string">"imp_total"</span>: <span class="number">1000.00</span>,
+            <span class="string">"imp_neto"</span>: <span class="number">826.45</span>,
+            <span class="string">"imp_iva"</span>: <span class="number">173.55</span>
+        }
+        <span class="keyword">ENDTEXT</span>
+        
+        <span class="comment">* Aquí iría la implementación del request HTTP</span>
+        
+        <span class="keyword">ENDPROC</span>
+        <span class="keyword">ENDDEFINE</span>
+
+        <span class="comment">* Uso de la clase</span>
+        oApi = <span class="function">CREATEOBJECT</span>(<span class="string">"FiscalApi"</span>)
+    oApi.CrearFactura()</pre>
+                        </div>
+                        <div id="vb6-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">' Ejemplo con Visual Basic 6</span>
+<span class="keyword">Option Explicit</span>
+
+<span class="keyword">Private Type</span> <span class="class">FiscalConfig</span>
+    <span class="variable">ApiKey</span> <span class="keyword">As String</span>
+    <span class="variable">Environment</span> <span class="keyword">As String</span>
+<span class="keyword">End Type</span>
+
+<span class="keyword">Private</span> <span class="variable">m_Config</span> <span class="keyword">As</span> <span class="class">FiscalConfig</span>
+<span class="keyword">Private</span> <span class="variable">m_HttpRequest</span> <span class="keyword">As</span> <span class="class">Object</span>
+
+<span class="keyword">Private Sub</span> <span class="function">Class_Initialize</span>()
+    <span class="keyword">Set</span> <span class="variable">m_HttpRequest</span> = <span class="function">CreateObject</span>(<span class="string">"MSXML2.XMLHTTP"</span>)
+    <span class="variable">m_Config</span>.<span class="variable">ApiKey</span> = <span class="string">"TU_API_KEY"</span>
+    <span class="variable">m_Config</span>.<span class="variable">Environment</span> = <span class="string">"production"</span>
+<span class="keyword">End Sub</span>
+
+<span class="keyword">Public Function</span> <span class="function">CrearFactura</span>() <span class="keyword">As String</span>
+    <span class="keyword">On Error GoTo</span> <span class="variable">ErrorHandler</span>
+    
+    <span class="keyword">Dim</span> <span class="variable">jsonBody</span> <span class="keyword">As String</span>
+    <span class="variable">jsonBody</span> = <span class="string">"{" & _
+        """tipo_comprobante"": ""A"", " & _
+        """punto_venta"": 1, " & _
+        """concepto"": 1, " & _
+        """doc_tipo"": 80, " & _
+        """doc_nro"": ""30712345678"", " & _
+        """fecha"": """ & Format(Date, "yyyy-mm-dd") & """, " & _
+        """imp_total"": 1000.00, " & _
+        """imp_neto"": 826.45, " & _
+        """imp_iva"": 173.55" & _
+    "}"</span>
+    
+    <span class="variable">m_HttpRequest</span>.<span class="function">Open</span> <span class="string">"POST"</span>, <span class="string">"https://api.fiscal.service/v1/comprobantes"</span>, <span class="keyword">False</span>
+    <span class="variable">m_HttpRequest</span>.<span class="function">setRequestHeader</span> <span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> & <span class="variable">m_Config</span>.<span class="variable">ApiKey</span>
+    <span class="variable">m_HttpRequest</span>.<span class="function">setRequestHeader</span> <span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>
+    <span class="variable">m_HttpRequest</span>.<span class="function">send</span> <span class="variable">jsonBody</span>
+    
+    <span class="keyword">If</span> <span class="variable">m_HttpRequest</span>.<span class="variable">Status</span> = <span class="number">200</span> <span class="keyword">Then</span>
+        <span class="function">CrearFactura</span> = <span class="variable">m_HttpRequest</span>.<span class="variable">responseText</span>
+    <span class="keyword">Else</span>
+        <span class="keyword">Err.Raise</span> <span class="variable">m_HttpRequest</span>.<span class="variable">Status</span>, <span class="string">"CrearFactura"</span>, <span class="variable">m_HttpRequest</span>.<span class="variable">responseText</span>
+    <span class="keyword">End If</span>
+    
+    <span class="keyword">Exit Function</span>
+    
+<span class="variable">ErrorHandler</span>:
+    <span class="function">CrearFactura</span> = <span class="string">"Error: "</span> & <span class="function">Err.Description</span>
+<span class="keyword">End Function</span></pre>
+                        </div>
+                        <div id="vbnet-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">' Ejemplo con Visual Basic .NET</span>
+<span class="keyword">Imports</span> System.Net.Http
+<span class="keyword">Imports</span> Newtonsoft.Json
+<span class="keyword">Imports</span> System.Text
+
+<span class="keyword">Namespace</span> FiscalApi
+
+    <span class="keyword">Public Class</span> <span class="class">FiscalApiClient</span>
+
+        <span class="keyword">Private ReadOnly</span> <span class="variable">_httpClient</span> <span class="keyword">As</span> <span class="class">HttpClient</span>
+        <span class="keyword">Private ReadOnly</span> <span class="variable">_apiKey</span> <span class="keyword">As String</span>
+        <span class="keyword">Private ReadOnly</span> <span class="variable">_baseUrl</span> <span class="keyword">As String</span> = <span class="string">"https://api.fiscal.service/v1"</span>
+
+        <span class="keyword">Public Sub</span> <span class="function">New</span>(<span class="variable">apiKey</span> <span class="keyword">As String</span>)
+            <span class="variable">_apiKey</span> = apiKey
+            <span class="variable">_httpClient</span> = <span class="keyword">New</span> <span class="class">HttpClient</span>()
+            <span class="variable">_httpClient</span>.DefaultRequestHeaders.Add(<span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> & apiKey)
+        <span class="keyword">End Sub</span>
+
+        <span class="keyword">Public Async Function</span> <span class="function">CrearFactura</span>() <span class="keyword">As</span> <span class="class">Task</span>(<span class="keyword">Of</span> <span class="class">String</span>)
+            <span class="keyword">Try</span>
+                <span class="keyword">Dim</span> <span class="variable">factura</span> = <span class="keyword">New</span> <span class="keyword">With</span> {
+                    .tipo_comprobante = <span class="string">"A"</span>,
+                    .punto_venta = <span class="number">1</span>,
+                    .concepto = <span class="number">1</span>,
+                    .doc_tipo = <span class="number">80</span>,
+                    .doc_nro = <span class="string">"30712345678"</span>,
+                    .fecha = <span class="class">DateTime</span>.Now.ToString(<span class="string">"yyyy-MM-dd"</span>),
+                    .imp_total = <span class="number">1000.0</span>,
+                    .imp_neto = <span class="number">826.45</span>,
+                    .imp_iva = <span class="number">173.55</span>
+                }
+
+                <span class="keyword">Dim</span> <span class="variable">json</span> = <span class="class">JsonConvert</span>.SerializeObject(factura)
+                <span class="keyword">Dim</span> <span class="variable">content</span> = <span class="keyword">New</span> <span class="class">StringContent</span>(json, <span class="class">Encoding</span>.UTF8, <span class="string">"application/json"</span>)
+                
+                <span class="keyword">Dim</span> <span class="variable">response</span> = <span class="keyword">Await</span> <span class="variable">_httpClient</span>.PostAsync(<span class="variable">_baseUrl</span> & <span class="string">"/comprobantes"</span>, content)
+                <span class="variable">response</span>.EnsureSuccessStatusCode()
+
+                <span class="keyword">Return Await</span> <span class="variable">response</span>.Content.ReadAsStringAsync()
+
+            <span class="keyword">Catch</span> ex <span class="keyword">As</span> <span class="class">Exception</span>
+                <span class="keyword">Return</span> <span class="string">"Error: "</span> & ex.Message
+            <span class="keyword">End Try</span>
+        <span class="keyword">End Function</span>
+
+    <span class="keyword">End Class</span>
+
+<span class="keyword">End Namespace</span>
+
+<span class="comment">' Uso del cliente</span>
+<span class="keyword">Dim</span> <span class="variable">client</span> = <span class="keyword">New</span> <span class="class">FiscalApiClient</span>(<span class="string">"TU_API_KEY"</span>)
+<span class="keyword">Dim</span> <span class="variable">resultado</span> = <span class="keyword">Await</span> client.CrearFactura()</pre>
+                        </div>
+                        <div id="csharp-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">// Ejemplo con C#</span>
+<span class="keyword">using</span> System.Net.Http;
+<span class="keyword">using</span> System.Text;
+<span class="keyword">using</span> System.Text.Json;
+<span class="keyword">using</span> System.Threading.Tasks;
+
+<span class="keyword">namespace</span> FiscalApi
+{
+    <span class="keyword">public class</span> <span class="class">FiscalApiClient</span>
+    {
+        <span class="keyword">private readonly</span> <span class="class">HttpClient</span> <span class="variable">_httpClient</span>;
+        <span class="keyword">private readonly</span> <span class="class">String</span> <span class="variable">_baseUrl</span> = <span class="string">"https://api.fiscal.service/v1"</span>;
+
+        <span class="keyword">public</span> <span class="function">FiscalApiClient</span>(<span class="class">String</span> apiKey)
+        {
+            <span class="variable">_httpClient</span> = <span class="keyword">new</span> <span class="class">HttpClient</span>();
+            <span class="variable">_httpClient</span>.DefaultRequestHeaders.Add(<span class="string">"Authorization"</span>, $<span class="string">"Bearer {apiKey}"</span>);
+        }
+
+        <span class="keyword">public async</span> <span class="class">Task</span><<span class="class">String</span>> <span class="function">CrearFactura</span>()
+        {
+            <span class="keyword">try</span>
+            {
+                <span class="keyword">var</span> factura = <span class="keyword">new</span>
+                {
+                    tipo_comprobante = <span class="string">"A"</span>,
+                    punto_venta = <span class="number">1</span>,
+                    concepto = <span class="number">1</span>,
+                    doc_tipo = <span class="number">80</span>,
+                    doc_nro = <span class="string">"30712345678"</span>,
+                    fecha = <span class="class">DateTime</span>.Now.ToString(<span class="string">"yyyy-MM-dd"</span>),
+                    imp_total = <span class="number">1000.00</span>,
+                    imp_neto = <span class="number">826.45</span>,
+                    imp_iva = <span class="number">173.55</span>
+                };
+
+                <span class="keyword">var</span> json = <span class="class">JsonSerializer</span>.Serialize(factura);
+                <span class="keyword">var</span> content = <span class="keyword">new</span> <span class="class">StringContent</span>(json, <span class="class">Encoding</span>.UTF8, <span class="string">"application/json"</span>);
+
+                <span class="keyword">var</span> response = <span class="keyword">await</span> <span class="variable">_httpClient</span>.PostAsync($<span class="string">"{_baseUrl}/comprobantes"</span>, content);
+                response.EnsureSuccessStatusCode();
+
+                <span class="keyword">return await</span> response.Content.ReadAsStringAsync();
+            }
+            <span class="keyword">catch</span> (<span class="class">Exception</span> ex)
+            {
+                <span class="keyword">return</span> $<span class="string">"Error: {ex.Message}"</span>;
+            }
+        }
+    }
+}
+
+<span class="comment">// Uso del cliente</span>
+<span class="keyword">var</span> client = <span class="keyword">new</span> <span class="class">FiscalApiClient</span>(<span class="string">"TU_API_KEY"</span>);
+<span class="keyword">var</span> resultado = <span class="keyword">await</span> client.CrearFactura();</pre>
+                        </div>
+                        <div id="delphi-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">// Ejemplo con Delphi</span>
+<span class="keyword">unit</span> FiscalApi;
+
+<span class="keyword">interface</span>
+
+<span class="keyword">uses</span>
+  System.SysUtils, System.Classes, System.JSON,
+  System.Net.HttpClient, System.Net.URLClient;
+
+<span class="keyword">type</span>
+  <span class="class">TFiscalApiClient</span> = <span class="keyword">class</span>
+  <span class="keyword">private</span>
+    <span class="variable">FHttpClient</span>: <span class="class">THTTPClient</span>;
+    <span class="variable">FApiKey</span>: <span class="keyword">string</span>;
+    <span class="variable">FBaseUrl</span>: <span class="keyword">string</span>;
+  <span class="keyword">public</span>
+    <span class="function">constructor</span> Create(<span class="keyword">const</span> ApiKey: <span class="keyword">string</span>);
+    <span class="function">destructor</span> Destroy; <span class="keyword">override</span>;
+    <span class="function">function</span> CrearFactura: <span class="keyword">string</span>;
+  <span class="keyword">end</span>;
+
+<span class="keyword">implementation</span>
+
+<span class="function">constructor</span> <span class="class">TFiscalApiClient</span>.Create(<span class="keyword">const</span> ApiKey: <span class="keyword">string</span>);
+<span class="keyword">begin</span>
+  <span class="keyword">inherited</span> Create;
+  <span class="variable">FApiKey</span> := ApiKey;
+  <span class="variable">FBaseUrl</span> := <span class="string">'https://api.fiscal.service/v1'</span>;
+  <span class="variable">FHttpClient</span> := <span class="class">THTTPClient</span>.Create;
+  <span class="variable">FHttpClient</span>.CustomHeaders[<span class="string">'Authorization'</span>] := <span class="string">'Bearer '</span> + ApiKey;
+<span class="keyword">end</span>;
+
+<span class="function">destructor</span> <span class="class">TFiscalApiClient</span>.Destroy;
+<span class="keyword">begin</span>
+  <span class="variable">FHttpClient</span>.Free;
+  <span class="keyword">inherited</span>;
+<span class="keyword">end</span>;
+
+<span class="function">function</span> <span class="class">TFiscalApiClient</span>.CrearFactura: <span class="keyword">string</span>;
+<span class="keyword">var</span>
+  JsonObj: <span class="class">TJSONObject</span>;
+  Response: <span class="class">IHTTPResponse</span>;
+<span class="keyword">begin</span>
+  <span class="keyword">try</span>
+    JsonObj := <span class="class">TJSONObject</span>.Create;
+    <span class="keyword">try</span>
+      JsonObj.AddPair(<span class="string">'tipo_comprobante'</span>, <span class="string">'A'</span>);
+      JsonObj.AddPair(<span class="string">'punto_venta'</span>, <span class="class">TJSONNumber</span>.Create(<span class="number">1</span>));
+      JsonObj.AddPair(<span class="string">'concepto'</span>, <span class="class">TJSONNumber</span>.Create(<span class="number">1</span>));
+      JsonObj.AddPair(<span class="string">'doc_tipo'</span>, <span class="class">TJSONNumber</span>.Create(<span class="number">80</span>));
+      JsonObj.AddPair(<span class="string">'doc_nro'</span>, <span class="string">'30712345678'</span>);
+      JsonObj.AddPair(<span class="string">'fecha'</span>, <span class="string">'2024-02-21'</span>);
+      JsonObj.AddPair(<span class="string">'imp_total'</span>, <span class="class">TJSONNumber</span>.Create(<span class="number">1000.00</span>));
+      JsonObj.AddPair(<span class="string">'imp_neto'</span>, <span class="class">TJSONNumber</span>.Create(<span class="number">826.45</span>));
+      JsonObj.AddPair(<span class="string">'imp_iva'</span>, <span class="class">TJSONNumber</span>.Create(<span class="number">173.55</span>));
+
+      Response := <span class="variable">FHttpClient</span>.Post(
+        <span class="variable">FBaseUrl</span> + <span class="string">'/comprobantes'</span>,
+        <span class="class">TStringStream</span>.Create(JsonObj.ToString),
+        <span class="keyword">nil</span>
+      );
+
+      Result := Response.ContentAsString;
+    <span class="keyword">finally</span>
+      JsonObj.Free;
+    <span class="keyword">end</span>;
+  <span class="keyword">except</span>
+    <span class="keyword">on</span> E: <span class="class">Exception</span> <span class="keyword">do</span>
+      Result := <span class="string">'Error: '</span> + E.Message;
+  <span class="keyword">end</span>;
+<span class="keyword">end</span>;
+
+<span class="keyword">end</span>.
+
+<span class="comment">! Uso del cliente</span>
+<span class="keyword">var</span>
+  Client: <span class="class">TFiscalApiClient</span>;
+  Response: <span class="keyword">string</span>;
+<span class="keyword">begin</span>
+  Client := <span class="class">TFiscalApiClient</span>.Create(<span class="string">'TU_API_KEY'</span>);
+  <span class="keyword">try</span>
+    Response := Client.CrearFactura;
+    Writeln(Response);
+  <span class="keyword">finally</span>
+    Client.Free;
+  <span class="keyword">end</span>;
+<span class="keyword">end</span>;
+
+<span class="comment">// ... existing code ...
+                        
+                        </div>
+                        <div id="clarion-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">! Ejemplo con Clarion</span>
+<span class="keyword">PROGRAM</span>
+
+<span class="keyword">INCLUDE</span> <span class="string">'ABCWIN.INC'</span>
+<span class="keyword">INCLUDE</span> <span class="string">'RESTFUL.INC'</span>
+<span class="keyword">INCLUDE</span> <span class="string">'JSON.INC'</span>
+
+<span class="class">FiscalApiClient</span> <span class="keyword">CLASS</span>
+    <span class="variable">apiKey</span>           <span class="keyword">STRING</span>(<span class="number">100</span>)
+    <span class="variable">baseUrl</span>          <span class="keyword">STRING</span>(<span class="number">100</span>)
+    <span class="variable">httpClient</span>       &<span class="class">HttpClientClass</span>
+
+    <span class="function">Construct</span>        <span class="keyword">PROCEDURE</span>(<span class="keyword">STRING</span> pApiKey)
+    <span class="function">Destruct</span>         <span class="keyword">PROCEDURE</span>
+    <span class="function">CrearFactura</span>     <span class="keyword">PROCEDURE</span>, <span class="keyword">STRING</span>
+                <span class="keyword">END</span>
+
+<span class="function">FiscalApiClient.Construct</span> <span class="keyword">PROCEDURE</span>(<span class="keyword">STRING</span> pApiKey)
+    <span class="keyword">CODE</span>
+    <span class="variable">SELF</span>.apiKey = pApiKey
+    <span class="variable">SELF</span>.baseUrl = <span class="string">'https://api.fiscal.service/v1'</span>
+    <span class="variable">SELF</span>.httpClient &= <span class="keyword">NEW</span> <span class="class">HttpClientClass</span>
+
+<span class="function">FiscalApiClient.Destruct</span> <span class="keyword">PROCEDURE</span>
+    <span class="keyword">CODE</span>
+    <span class="keyword">DISPOSE</span>(<span class="variable">SELF</span>.httpClient)
+
+<span class="function">FiscalApiClient.CrearFactura</span> <span class="keyword">PROCEDURE</span>
+    <span class="variable">jsonRequest</span>      <span class="keyword">STRING</span>(<span class="number">1024</span>)
+    <span class="variable">response</span>         <span class="keyword">STRING</span>(<span class="number">1024</span>)
+    <span class="variable">error</span>            <span class="keyword">STRING</span>(<span class="number">100</span>)
+    <span class="keyword">CODE</span>
+    <span class="keyword">TRY</span>
+        <span class="variable">jsonRequest</span> = <span class="string">'{'</span> & |
+            <span class="string">'"tipo_comprobante": "A",'</span> & |
+            <span class="string">'"punto_venta": 1,'</span> & |
+            <span class="string">'"concepto": 1,'</span> & |
+            <span class="string">'"doc_tipo": 80,'</span> & |
+            <span class="string">'"doc_nro": "30712345678",'</span> & |
+            <span class="string">'"fecha": "'</span> & <span class="function">FORMAT</span>(<span class="function">TODAY</span>(),<span class="string">'YYYY-MM-DD'</span>) & <span class="string">'",'</span> & |
+            <span class="string">'"imp_total": 1000.00,'</span> & |
+            <span class="string">'"imp_neto": 826.45,'</span> & |
+            <span class="string">'"imp_iva": 173.55'</span> & |
+            <span class="string">'}'</span>
+
+        <span class="variable">SELF</span>.httpClient.<span class="function">SetHeader</span>(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>)
+        <span class="variable">SELF</span>.httpClient.<span class="function">SetHeader</span>(<span class="string">'Authorization'</span>, <span class="string">'Bearer '</span> & <span class="variable">SELF</span>.apiKey)
+        
+        <span class="variable">response</span> = <span class="variable">SELF</span>.httpClient.<span class="function">Post</span>(<span class="variable">SELF</span>.baseUrl & <span class="string">'/comprobantes'</span>, <span class="variable">jsonRequest</span>)
+        
+        <span class="keyword">IF</span> <span class="variable">SELF</span>.httpClient.StatusCode = <span class="number">200</span>
+            <span class="keyword">RETURN</span> <span class="variable">response</span>
+        <span class="keyword">ELSE</span>
+            <span class="keyword">RETURN</span> <span class="string">'Error: '</span> & <span class="variable">SELF</span>.httpClient.StatusText
+        <span class="keyword">END</span>
+        
+    <span class="keyword">CATCH</span>
+        <span class="function">GetErrorMessage</span>(<span class="variable">error</span>)
+        <span class="keyword">RETURN</span> <span class="string">'Error: '</span> & <span class="variable">error</span>
+    <span class="keyword">END</span>
+
+<span class="comment">! Ejemplo de uso</span>
+<span class="variable">client</span>  <span class="class">FiscalApiClient</span>
+<span class="variable">result</span>  <span class="keyword">STRING</span>(<span class="number">1024</span>)
+
+<span class="variable">client</span>.<span class="function">Construct</span>(<span class="string">'TU_API_KEY'</span>)
+<span class="variable">result</span> = <span class="variable">client</span>.<span class="function">CrearFactura</span>()
+<span class="function">Message</span>(<span class="variable">result</span>, <span class="string">'Resultado'</span>)</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       
+        <!-- Features Grid -->
+        <section class="py-16" id="features">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-12 text-center text-white">Características Principales</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature cards aquí -->
+                    <div class="feature-card bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-blue-500 transition-colors">
+                        <div class="w-12 h-12 mb-4 text-blue-400">
+                            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Seguridad Certificada</h3>
+                        <p class="text-gray-300">ISO 27001 y comunicación encriptada end-to-end. Máxima protección para tus datos fiscales.</p>
+                    </div>
+
+                    <div class="feature-card bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-blue-500 transition-colors">
+                        <div class="w-12 h-12 mb-4 text-blue-400">
+                            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Alta Disponibilidad</h3>
+                        <p class="text-gray-300">99.9% de uptime garantizado con redundancia y balanceo de carga automático.</p>
+                    </div>
+
+                    <div class="feature-card bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-blue-500 transition-colors">
+                        <div class="w-12 h-12 mb-4 text-blue-400">
+                            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Documentación Completa</h3>
+                        <p class="text-gray-300">Guías detalladas, ejemplos de código y soporte para múltiples lenguajes de programación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration Section -->
+        <section class="py-16 bg-gray-900">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-12 text-center text-white">Integraciones Disponibles</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- ARCA Integration -->
+                    <div class="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-4">ARCA</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Factura Electrónica (CAE)
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Factura de Crédito MiPyME
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Remito Electrónico Cárnico
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- ARBA Integration -->
+                    <div class="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-4">ARBA</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Remito Electrónico (COT)
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Certificados Digitales
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Validación de Contribuyentes
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- E-commerce Integration -->
+                    <div class="bg-gray-900 rounded-lg p-6 border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-4">E-commerce</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                MercadoLibre API
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                MercadoPago Gateway
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Tienda Nube Integration
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="py-16" id="pricing">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-12 text-center text-white">Planes y Precios</h2>
+                <div class="text-center mb-12">
+                    <p class="inline-block bg-blue-600 text-3xl text-white px-4 py-2 rounded-lg mb-8">Tarifas vigentes al 21/02/2025</p>
+                    <p class=" text-xl text-gray-300 font-bold mb-6"><i class="fas fa-check-circle text-blue-500 mr-2"></i>Prueba gratuita por 15 días sin compromiso de compra</p>
+                    <p class="text-xl text-gray-300 mb-6"><i class="fas fa-code text-blue-500 mr-2"></i>SDK nativo para Visual FoxPro disponible y personalizable</p>
+                    <p class="text-2xl text-blue-400"><i class="fas fa-flask text-blue-500 mr-2"></i>Ambiente de Homologación disponible a partir del 28/02/2025</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+                    <!-- Basic Plan -->
+                    <div class="pricing-card bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-gray-500 transition-transform transform hover:scale-105">
+                        <div class="text-center mb-8">
+                            <h3 class="text-xl font-bold text-white mb-4">Plan Básico</h3>
+                            <div class="text-3xl font-bold text-white">$60.000<span class="text-gray-400 text-lg">/mes</span></div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 10CUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 3Puntos de Venta porCUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 1000 comprobantes/mes por CUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                API REST + DSKs
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Soporte por email
+                            </li>
+                        </ul>
+                        <button class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Comenzar 
+                        </button>
+                    </div>
+
+                    <!-- Medium Plan -->
+                    <div class="pricing-card bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-gray-500 transition-transform transform hover:scale-105">
+                        <div class="text-center mb-8">
+                            <h3 class="text-xl font-bold text-white mb-4">Plan Medium</h3>
+                            <div class="text-3xl font-bold text-white">$108.000<span class="text-gray-400 text-lg">/mes</span></div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 20CUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 3Puntos de Venta porCUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 3000 comprobantes/mes por CUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                API REST + SDKs
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Soporte por email
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Soporte por whatsapp
+                            </li>
+                        </ul>
+                        <button class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Comenzar
+                        </button>
+                    </div>
+
+                    <!-- Pro Plan -->
+                    <div class="pricing-card bg-gray-900 rounded-lg p-6 border border-blue-500 transform scale-105 hover:border-blue-500 transition-transform transform hover:scale-110">
+                        <div class="text-center mb-8">
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Recomendado</span>
+                            <h3 class="text-xl font-bold text-white my-4">Plan Pro</h3>
+                            <div class="text-3xl font-bold text-white">$195.000<span class="text-gray-400 text-lg">/mes</span></div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 40CUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 3Puntos de Venta porCUIT
+                            </li>
+                        </ul>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Hasta 5,000 comprobantes/mes por CUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                API REST + SDKs
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Soporte prioritario
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Soporte por whatsapp
+                            </li>
+                        </ul>
+                        <button class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Comenzar 
+                        </button>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="pricing-card bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-gray-500 transition-transform transform hover:scale-105">
+                        <div class="text-center mb-8">
+                            <h3 class="text-xl font-bold text-white mb-4">Plan Personalizado</h3>
+                            <div class="text-xl font-bold text-white">Consultar</div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                CUIT ilimitados
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Puntos de Ventapersonalizados
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Comprobantes ilimitados por CUIT
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                API REST + SDKs personalizados
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Soporte 24/7
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Soporte por whatsapp
+                            </li>
+                        </ul>
+                        <button class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Contactar 
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 bg-gray-950 border-t border-gray-800" id="contact">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h4 class="text-white font-bold mb-4">Fiscal API</h4>
+                        <p class="text-gray-400">Simplificamos la gestión fiscal para tu negocio</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-4">Productos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">API REST</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">SDKs</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Integraciones</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-4">Recursos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">Documentación</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Soporte</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-4">Contacto</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">Ventas</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Soporte</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Status</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
+                    <p>© 2024 Fiscal API. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
