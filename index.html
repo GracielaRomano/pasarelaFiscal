@@ -60,6 +60,12 @@
                         <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="csharp">C#</button>
                         <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="delphi">Delphi</button>
                         <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="clarion">Clarion</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="java">Java</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="harbour">Harbour</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="powerbuilder">PowerBuilder</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="cobol">COBOL</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="access">Access</button>
+                        <button class="code-tab-btn px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" data-tab="excel">Excel</button>
                     </div>
                     <div class="code-content p-6">
                         <div id="php-code" class="code-tab active">
@@ -216,8 +222,8 @@
         """doc_nro"": ""30712345678"", " & _
         """fecha"": """ & Format(Date, "yyyy-mm-dd") & """, " & _
         """imp_total"": 1000.00, " & _
-        """imp_neto"": 826.45, " & _
-        """imp_iva"": 173.55" & _
+        """imp_neto"</span>: <span class="number">826.45</span>, " & _
+        """imp_iva"": <span class="number">173.55" & _
     "}"</span>
     
     <span class="variable">m_HttpRequest</span>.<span class="function">Open</span> <span class="string">"POST"</span>, <span class="string">"https://api.fiscal.service/v1/comprobantes"</span>, <span class="keyword">False</span>
@@ -421,7 +427,7 @@
     <span class="keyword">end</span>;
   <span class="keyword">except</span>
     <span class="keyword">on</span> E: <span class="class">Exception</span> <span class="keyword">do</span>
-      Result := <span class="string">'Error: '</span> + E.Message;
+      Result := <span class="string">'Error: '</span> & E.Message;
   <span class="keyword">end</span>;
 <span class="keyword">end</span>;
 
@@ -444,76 +450,493 @@
 <span class="comment">// ... existing code ...
                         
                         </div>
-                        <div id="clarion-code" class="code-tab hidden">
+                        <div id="java-code" class="code-tab hidden">
                             <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
-<span class="comment">! Ejemplo con Clarion</span>
-<span class="keyword">PROGRAM</span>
+<span class="comment">// Ejemplo con Java</span>
+<span class="keyword">package</span> com.fiscalapi;
 
-<span class="keyword">INCLUDE</span> <span class="string">'ABCWIN.INC'</span>
-<span class="keyword">INCLUDE</span> <span class="string">'RESTFUL.INC'</span>
-<span class="keyword">INCLUDE</span> <span class="string">'JSON.INC'</span>
+<span class="keyword">import</span> java.net.http.HttpClient;
+<span class="keyword">import</span> java.net.http.HttpRequest;
+<span class="keyword">import</span> java.net.http.HttpResponse;
+<span class="keyword">import</span> java.net.URI;
+<span class="keyword">import</span> com.google.gson.Gson;
+<span class="keyword">import</span> java.time.LocalDate;
+<span class="keyword">import</span> java.util.HashMap;
+<span class="keyword">import</span> java.util.Map;
 
-<span class="class">FiscalApiClient</span> <span class="keyword">CLASS</span>
-    <span class="variable">apiKey</span>           <span class="keyword">STRING</span>(<span class="number">100</span>)
-    <span class="variable">baseUrl</span>          <span class="keyword">STRING</span>(<span class="number">100</span>)
-    <span class="variable">httpClient</span>       &<span class="class">HttpClientClass</span>
+<span class="keyword">public class</span> <span class="class">FiscalApiClient</span> {
+    <span class="keyword">private final</span> <span class="class">String</span> <span class="variable">apiKey</span>;
+    <span class="keyword">private final</span> <span class="class">String</span> <span class="variable">baseUrl</span> = <span class="string">"https://api.fiscal.service/v1"</span>;
+    <span class="keyword">private final</span> <span class="class">HttpClient</span> <span class="variable">httpClient</span>;
+    <span class="keyword">private final</span> <span class="class">Gson</span> <span class="variable">gson</span>;
 
-    <span class="function">Construct</span>        <span class="keyword">PROCEDURE</span>(<span class="keyword">STRING</span> pApiKey)
-    <span class="function">Destruct</span>         <span class="keyword">PROCEDURE</span>
-    <span class="function">CrearFactura</span>     <span class="keyword">PROCEDURE</span>, <span class="keyword">STRING</span>
-                <span class="keyword">END</span>
+    <span class="keyword">public</span> <span class="function">FiscalApiClient</span>(<span class="class">String</span> apiKey) {
+        <span class="keyword">this</span>.<span class="variable">apiKey</span> = apiKey;
+        <span class="keyword">this</span>.<span class="variable">httpClient</span> = <span class="class">HttpClient</span>.newHttpClient();
+        <span class="keyword">this</span>.<span class="variable">gson</span> = <span class="keyword">new</span> <span class="class">Gson</span>();
+    }
 
-<span class="function">FiscalApiClient.Construct</span> <span class="keyword">PROCEDURE</span>(<span class="keyword">STRING</span> pApiKey)
-    <span class="keyword">CODE</span>
-    <span class="variable">SELF</span>.apiKey = pApiKey
-    <span class="variable">SELF</span>.baseUrl = <span class="string">'https://api.fiscal.service/v1'</span>
-    <span class="variable">SELF</span>.httpClient &= <span class="keyword">NEW</span> <span class="class">HttpClientClass</span>
+    <span class="keyword">public</span> <span class="class">String</span> <span class="function">crearFactura</span>() <span class="keyword">throws</span> <span class="class">Exception</span> {
+        <span class="keyword">try</span> {
+            <span class="class">Map</span><<span class="class">String</span>, <span class="class">Object</span>> factura = <span class="keyword">new</span> <span class="class">HashMap</span><>();
+            factura.put(<span class="string">"tipo_comprobante"</span>, <span class="string">"A"</span>);
+            factura.put(<span class="string">"punto_venta"</span>, <span class="number">1</span>);
+            factura.put(<span class="string">"concepto"</span>, <span class="number">1</span>);
+            factura.put(<span class="string">"doc_tipo"</span>, <span class="number">80</span>);
+            factura.put(<span class="string">"doc_nro"</span>, <span class="string">"30712345678"</span>);
+            factura.put(<span class="string">"fecha"</span>, <span class="class">LocalDate</span>.now().toString());
+            factura.put(<span class="string">"imp_total"</span>, <span class="number">1000.00</span>);
+            factura.put(<span class="string">"imp_neto"</span>, <span class="number">826.45</span>);
+            factura.put(<span class="string">"imp_iva"</span>, <span class="number">173.55</span>);
 
-<span class="function">FiscalApiClient.Destruct</span> <span class="keyword">PROCEDURE</span>
-    <span class="keyword">CODE</span>
-    <span class="keyword">DISPOSE</span>(<span class="variable">SELF</span>.httpClient)
+            <span class="class">String</span> jsonBody = <span class="variable">gson</span>.toJson(factura);
 
-<span class="function">FiscalApiClient.CrearFactura</span> <span class="keyword">PROCEDURE</span>
-    <span class="variable">jsonRequest</span>      <span class="keyword">STRING</span>(<span class="number">1024</span>)
-    <span class="variable">response</span>         <span class="keyword">STRING</span>(<span class="number">1024</span>)
-    <span class="variable">error</span>            <span class="keyword">STRING</span>(<span class="number">100</span>)
-    <span class="keyword">CODE</span>
+            <span class="class">HttpRequest</span> request = <span class="class">HttpRequest</span>.newBuilder()
+                .uri(<span class="class">URI</span>.create(<span class="variable">baseUrl</span> + <span class="string">"/comprobantes"</span>))
+                .header(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>)
+                .header(<span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> + <span class="variable">apiKey</span>)
+                .POST(<span class="class">HttpRequest</span>.<span class="class">BodyPublishers</span>.ofString(jsonBody))
+                .build();
+
+            <span class="class">HttpResponse</span><<span class="class">String</span>> response = <span class="variable">httpClient</span>.send(request, 
+                <span class="class">HttpResponse</span>.<span class="class">BodyHandlers</span>.ofString());
+
+            <span class="keyword">if</span> (response.statusCode() == <span class="number">200</span>) {
+                <span class="keyword">return</span> response.body();
+            } <span class="keyword">else</span> {
+                <span class="keyword">throw new</span> <span class="class">RuntimeException</span>(<span class="string">"Error: "</span> + response.body());
+            }
+        } <span class="keyword">catch</span> (<span class="class">Exception</span> e) {
+            <span class="keyword">throw new</span> <span class="class">RuntimeException</span>(<span class="string">"Error al crear factura: "</span> + e.getMessage());
+        }
+    }
+
+    <span class="comment">// Ejemplo de uso</span>
+    <span class="keyword">public static void</span> <span class="function">main</span>(<span class="class">String</span>[] args) {
+        <span class="class">FiscalApiClient</span> client = <span class="keyword">new</span> <span class="class">FiscalApiClient</span>(<span class="string">"TU_API_KEY"</span>);
+        <span class="keyword">try</span> {
+            <span class="class">String</span> resultado = client.crearFactura();
+            <span class="class">System</span>.out.println(<span class="string">"Factura creada: "</span> + resultado);
+        } <span class="keyword">catch</span> (<span class="class">Exception</span> e) {
+            <span class="class">System</span>.err.println(<span class="string">"Error: "</span> + e.getMessage());
+        }
+    }
+}</pre>
+                        </div>
+                        <div id="harbour-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">/* Ejemplo con Harbour */</span>
+<span class="keyword">#include</span> <span class="string">"hbclass.ch"</span>
+<span class="keyword">#include</span> <span class="string">"hbhash.ch"</span>
+<span class="keyword">#include</span> <span class="string">"hbcurl.ch"</span>
+
+<span class="keyword">CREATE CLASS</span> <span class="class">FiscalApiClient</span>
+    <span class="keyword">PROTECTED:</span>
+        <span class="variable">VAR</span> cApiKey
+        <span class="variable">VAR</span> cBaseUrl
+        <span class="variable">VAR</span> oCurl
+
+    <span class="keyword">EXPORTED:</span>
+        <span class="function">METHOD</span> New(cKey)
+        <span class="function">METHOD</span> CrearFactura()
+        <span class="function">METHOD</span> Destroy()
+<span class="keyword">ENDCLASS</span>
+
+<span class="function">METHOD</span> New(cKey) <span class="keyword">CLASS</span> <span class="class">FiscalApiClient</span>
+    <span class="variable">::cApiKey</span> := cKey
+    <span class="variable">::cBaseUrl</span> := <span class="string">"https://api.fiscal.service/v1"</span>
+    <span class="variable">::oCurl</span> := curl_easy_init()
+    <span class="keyword">RETURN</span> <span class="keyword">Self</span>
+
+<span class="function">METHOD</span> Destroy() <span class="keyword">CLASS</span> <span class="class">FiscalApiClient</span>
+    curl_easy_cleanup(<span class="variable">::oCurl</span>)
+    <span class="keyword">RETURN</span> <span class="keyword">NIL</span>
+
+<span class="function">METHOD</span> CrearFactura() <span class="keyword">CLASS</span> <span class="class">FiscalApiClient</span>
+    <span class="keyword">LOCAL</span> hFactura := <span class="class">HHash</span>()
+    <span class="keyword">LOCAL</span> cJson, cResponse, nStatus
+    <span class="keyword">LOCAL</span> aHeaders := {}
+
     <span class="keyword">TRY</span>
-        <span class="variable">jsonRequest</span> = <span class="string">'{'</span> & |
-            <span class="string">'"tipo_comprobante": "A",'</span> & |
-            <span class="string">'"punto_venta": 1,'</span> & |
-            <span class="string">'"concepto": 1,'</span> & |
-            <span class="string">'"doc_tipo": 80,'</span> & |
-            <span class="string">'"doc_nro": "30712345678",'</span> & |
-            <span class="string">'"fecha": "'</span> & <span class="function">FORMAT</span>(<span class="function">TODAY</span>(),<span class="string">'YYYY-MM-DD'</span>) & <span class="string">'",'</span> & |
-            <span class="string">'"imp_total": 1000.00,'</span> & |
-            <span class="string">'"imp_neto": 826.45,'</span> & |
-            <span class="string">'"imp_iva": 173.55'</span> & |
-            <span class="string">'}'</span>
+        <span class="comment">// Preparar datos de la factura</span>
+        hFactura[<span class="string">"tipo_comprobante"</span>] := <span class="string">"A"</span>
+        hFactura[<span class="string">"punto_venta"</span>] := <span class="number">1</span>
+        hFactura[<span class="string">"concepto"</span>] := <span class="number">1</span>
+        hFactura[<span class="string">"doc_tipo"</span>] := <span class="number">80</span>
+        hFactura[<span class="string">"doc_nro"</span>] := <span class="string">"30712345678"</span>
+        hFactura[<span class="string">"fecha"</span>] := <span class="function">DToC</span>(<span class="function">Date</span>())
+        hFactura[<span class="string">"imp_total"</span>] := <span class="number">1000.00</span>
+        hFactura[<span class="string">"imp_neto"</span>] := <span class="number">826.45</span>
+        hFactura[<span class="string">"imp_iva"</span>] := <span class="number">173.55</span>
 
-        <span class="variable">SELF</span>.httpClient.<span class="function">SetHeader</span>(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>)
-        <span class="variable">SELF</span>.httpClient.<span class="function">SetHeader</span>(<span class="string">'Authorization'</span>, <span class="string">'Bearer '</span> & <span class="variable">SELF</span>.apiKey)
-        
-        <span class="variable">response</span> = <span class="variable">SELF</span>.httpClient.<span class="function">Post</span>(<span class="variable">SELF</span>.baseUrl & <span class="string">'/comprobantes'</span>, <span class="variable">jsonRequest</span>)
-        
-        <span class="keyword">IF</span> <span class="variable">SELF</span>.httpClient.StatusCode = <span class="number">200</span>
-            <span class="keyword">RETURN</span> <span class="variable">response</span>
+        <span class="comment">// Convertir a JSON</span>
+        cJson := hb_jsonEncode(hFactura)
+
+        <span class="comment">// Configurar headers</span>
+        <span class="function">AAdd</span>(aHeaders, <span class="string">"Content-Type: application/json"</span>)
+        <span class="function">AAdd</span>(aHeaders, <span class="string">"Authorization: Bearer "</span> + <span class="variable">::cApiKey</span>)
+
+        <span class="comment">// Configurar CURL</span>
+        curl_easy_setopt(<span class="variable">::oCurl</span>, HB_CURLOPT_URL, <span class="variable">::cBaseUrl</span> + <span class="string">"/comprobantes"</span>)
+        curl_easy_setopt(<span class="variable">::oCurl</span>, HB_CURLOPT_POST, <span class="number">1</span>)
+        curl_easy_setopt(<span class="variable">::oCurl</span>, HB_CURLOPT_POSTFIELDS, cJson)
+        curl_easy_setopt(<span class="variable">::oCurl</span>, HB_CURLOPT_HTTPHEADER, aHeaders)
+
+        <span class="comment">// Ejecutar request</span>
+        cResponse := curl_easy_perform(<span class="variable">::oCurl</span>)
+        nStatus := curl_easy_getinfo(<span class="variable">::oCurl</span>, HB_CURLINFO_RESPONSE_CODE)
+
+        <span class="keyword">IF</span> nStatus == <span class="number">200</span>
+            <span class="keyword">RETURN</span> cResponse
         <span class="keyword">ELSE</span>
-            <span class="keyword">RETURN</span> <span class="string">'Error: '</span> & <span class="variable">SELF</span>.httpClient.StatusText
-        <span class="keyword">END</span>
-        
-    <span class="keyword">CATCH</span>
-        <span class="function">GetErrorMessage</span>(<span class="variable">error</span>)
-        <span class="keyword">RETURN</span> <span class="string">'Error: '</span> & <span class="variable">error</span>
+            <span class="keyword">RETURN</span> <span class="string">"Error: "</span> + <span class="function">hb_ntos</span>(nStatus) + <span class="string">" - "</span> + cResponse
+        <span class="keyword">ENDIF</span>
+
+    <span class="keyword">CATCH</span> oError
+        <span class="keyword">RETURN</span> <span class="string">"Error: "</span> + oError:description
     <span class="keyword">END</span>
 
-<span class="comment">! Ejemplo de uso</span>
-<span class="variable">client</span>  <span class="class">FiscalApiClient</span>
-<span class="variable">result</span>  <span class="keyword">STRING</span>(<span class="number">1024</span>)
+<span class="comment">// Ejemplo de uso</span>
+<span class="keyword">FUNCTION</span> <span class="function">Main</span>()
+    <span class="keyword">LOCAL</span> oApi := <span class="class">FiscalApiClient</span>():New(<span class="string">"TU_API_KEY"</span>)
+    <span class="keyword">LOCAL</span> cResultado := oApi:CrearFactura()
 
-<span class="variable">client</span>.<span class="function">Construct</span>(<span class="string">'TU_API_KEY'</span>)
-<span class="variable">result</span> = <span class="variable">client</span>.<span class="function">CrearFactura</span>()
-<span class="function">Message</span>(<span class="variable">result</span>, <span class="string">'Resultado'</span>)</pre>
+    ? cResultado
+    oApi:Destroy()
+    <span class="keyword">RETURN</span> <span class="keyword">NIL</span></pre>
+                        </div>
+                        <div id="powerbuilder-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">// Ejemplo con PowerBuilder</span>
+<span class="keyword">forward</span>
+<span class="keyword">global type</span> <span class="class">n_fiscal_api</span> <span class="keyword">from</span> <span class="class">nonvisualobject</span>
+<span class="keyword">end type</span>
+<span class="keyword">end forward</span>
+
+<span class="keyword">global type</span> <span class="class">n_fiscal_api</span> <span class="keyword">from</span> <span class="class">nonvisualobject</span>
+<span class="keyword">private</span>:
+    <span class="variable">string</span> is_api_key
+    <span class="variable">string</span> is_base_url = <span class="string">"https://api.fiscal.service/v1"</span>
+<span class="keyword">end type</span>
+<span class="keyword">global</span> <span class="class">n_fiscal_api</span> <span class="class">n_fiscal_api</span>
+
+<span class="keyword">type variables</span>
+<span class="class">OLEObject</span> io_http_client
+<span class="keyword">end variables</span>
+
+<span class="keyword">forward</span> <span class="keyword">prototypes</span>
+    <span class="keyword">public function</span> <span class="function">string</span> <span class="function">crear_factura</span>()
+<span class="keyword">end prototypes</span>
+
+<span class="keyword">public function</span> <span class="function">string</span> <span class="function">crear_factura</span>();
+    <span class="variable">string</span> ls_json, ls_response, ls_error
+    <span class="class">JSONPackage</span> lnv_json
+    <span class="class">JSONObject</span> lnv_factura
+    
+    <span class="keyword">try</span>
+        <span class="comment">// Crear objeto JSON para la factura</span>
+        lnv_json = <span class="keyword">create</span> <span class="class">JSONPackage</span>
+        lnv_factura = lnv_json.<span class="function">CreateJSONObject</span>()
+        
+        <span class="comment">// Configurar datos de la factura</span>
+        lnv_factura.<span class="function">AddString</span>(<span class="string">"tipo_comprobante"</span>, <span class="string">"A"</span>)
+        lnv_factura.<span class="function">AddNumber</span>(<span class="string">"punto_venta"</span>, <span class="number">1</span>)
+        lnv_factura.<span class="function">AddNumber</span>(<span class="string">"concepto"</span>, <span class="number">1</span>)
+        lnv_factura.<span class="function">AddNumber</span>(<span class="string">"doc_tipo"</span>, <span class="number">80</span>)
+        lnv_factura.<span class="function">AddString</span>(<span class="string">"doc_nro"</span>, <span class="string">"30712345678"</span>)
+        lnv_factura.<span class="function">AddString</span>(<span class="string">"fecha"</span>, <span class="function">String</span>(<span class="function">Today</span>(), <span class="string">"yyyy-mm-dd"</span>))
+        lnv_factura.<span class="function">AddNumber</span>(<span class="string">"imp_total"</span>, <span class="number">1000.00</span>)
+        lnv_factura.<span class="function">AddNumber</span>(<span class="string">"imp_neto"</span>, <span class="number">826.45</span>)
+        lnv_factura.<span class="function">AddNumber</span>(<span class="string">"imp_iva"</span>, <span class="number">173.55</span>)
+        
+        ls_json = lnv_factura.<span class="function">GetJsonString</span>()
+        
+        <span class="comment">// Configurar cliente HTTP</span>
+        io_http_client = <span class="keyword">create</span> <span class="class">OLEObject</span>
+        io_http_client.<span class="function">ConnectToNewObject</span>(<span class="string">"MSXML2.XMLHTTP"</span>)
+        
+        <span class="comment">// Configurar y enviar request</span>
+        io_http_client.<span class="function">Open</span>(<span class="string">"POST"</span>, is_base_url + <span class="string">"/comprobantes"</span>, <span class="keyword">false</span>)
+        io_http_client.<span class="function">SetRequestHeader</span>(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>)
+        io_http_client.<span class="function">SetRequestHeader</span>(<span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> + is_api_key)
+        io_http_client.<span class="function">Send</span>(ls_json)
+        
+        <span class="keyword">if</span> io_http_client.<span class="variable">Status</span> = <span class="number">200</span> <span class="keyword">then</span>
+            ls_response = io_http_client.<span class="variable">ResponseText</span>
+        <span class="keyword">else</span>
+            ls_error = <span class="string">"Error "</span> + <span class="function">String</span>(io_http_client.<span class="variable">Status</span>) + <span class="string">": "</span> + io_http_client.<span class="variable">ResponseText</span>
+            <span class="keyword">throw</span> ls_error
+        <span class="keyword">end if</span>
+        
+        <span class="keyword">return</span> ls_response
+        
+    <span class="keyword">catch</span> (<span class="class">RuntimeError</span> rte)
+        <span class="keyword">return</span> <span class="string">"Error: "</span> + rte.<span class="variable">GetMessage</span>()
+        
+    <span class="keyword">finally</span>
+        <span class="keyword">if</span> <span class="function">IsValid</span>(lnv_json) <span class="keyword">then destroy</span> lnv_json
+        <span class="keyword">if</span> <span class="function">IsValid</span>(io_http_client) <span class="keyword">then destroy</span> io_http_client
+    <span class="keyword">end try</span>
+<span class="keyword">end function</span>
+
+<span class="comment">// Ejemplo de uso</span>
+<span class="class">n_fiscal_api</span> ln_api
+ln_api = <span class="keyword">create</span> <span class="class">n_fiscal_api</span>
+ln_api.is_api_key = <span class="string">"TU_API_KEY"</span>
+
+<span class="variable">string</span> ls_resultado
+ls_resultado = ln_api.<span class="function">crear_factura</span>()
+<span class="function">MessageBox</span>(<span class="string">"Resultado"</span>, ls_resultado)</pre>
+                        </div>
+                        <div id="cobol-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">      * Ejemplo con COBOL</span>
+       <span class="keyword">IDENTIFICATION</span> <span class="keyword">DIVISION</span>.
+       <span class="keyword">PROGRAM-ID</span>. <span class="class">FISCALAPI</span>.
+       
+       <span class="keyword">ENVIRONMENT</span> <span class="keyword">DIVISION</span>.
+       <span class="keyword">CONFIGURATION</span> <span class="keyword">SECTION</span>.
+       <span class="keyword">SPECIAL-NAMES</span>.
+           <span class="keyword">DECIMAL-POINT</span> <span class="keyword">IS</span> <span class="keyword">COMMA</span>.
+       
+       <span class="keyword">DATA</span> <span class="keyword">DIVISION</span>.
+       <span class="keyword">WORKING-STORAGE</span> <span class="keyword">SECTION</span>.
+       <span class="comment">      * Variables para la API</span>
+       <span class="number">01</span> <span class="variable">WS-API-KEY</span>     <span class="keyword">PIC</span> X(<span class="number">50</span>) 
+           <span class="keyword">VALUE</span> <span class="string">"TU_API_KEY"</span>.
+       <span class="number">01</span> <span class="variable">WS-BASE-URL</span>    <span class="keyword">PIC</span> X(<span class="number">50</span>) 
+           <span class="keyword">VALUE</span> <span class="string">"https://api.fiscal.service/v1"</span>.
+       
+       <span class="comment">      * Estructura para la factura</span>
+       <span class="number">01</span> <span class="variable">WS-FACTURA</span>.
+           <span class="number">05</span> <span class="variable">WS-TIPO-COMP</span>    <span class="keyword">PIC</span> X(<span class="number">1</span>) 
+               <span class="keyword">VALUE</span> <span class="string">"A"</span>.
+           <span class="number">05</span> <span class="variable">WS-PUNTO-VTA</span>    <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">4</span>) 
+               <span class="keyword">VALUE</span> <span class="number">0001</span>.
+           <span class="number">05</span> <span class="variable">WS-CONCEPTO</span>     <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">1</span>) 
+               <span class="keyword">VALUE</span> <span class="number">1</span>.
+           <span class="number">05</span> <span class="variable">WS-DOC-TIPO</span>     <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">2</span>) 
+               <span class="keyword">VALUE</span> <span class="number">80</span>.
+           <span class="number">05</span> <span class="variable">WS-DOC-NRO</span>      <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">11</span>) 
+               <span class="keyword">VALUE</span> <span class="number">30712345678</span>.
+           <span class="number">05</span> <span class="variable">WS-FECHA</span>        <span class="keyword">PIC</span> X(<span class="number">10</span>).
+           <span class="number">05</span> <span class="variable">WS-IMP-TOTAL</span>    <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">8</span>)V<span class="number">99</span> 
+               <span class="keyword">VALUE</span> <span class="number">1000.00</span>.
+           <span class="number">05</span> <span class="variable">WS-IMP-NETO</span>     <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">8</span>)V<span class="number">99</span> 
+               <span class="keyword">VALUE</span> <span class="number">826.45</span>.
+           <span class="number">05</span> <span class="variable">WS-IMP-IVA</span>      <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">8</span>)V<span class="number">99</span> 
+               <span class="keyword">VALUE</span> <span class="number">173.55</span>.
+       
+       <span class="comment">      * Variables para el manejo HTTP</span>
+       <span class="number">01</span> <span class="variable">WS-HTTP-RESPONSE</span>    <span class="keyword">PIC</span> X(<span class="number">1000</span>).
+       <span class="number">01</span> <span class="variable">WS-HTTP-STATUS</span>      <span class="keyword">PIC</span> <span class="number">9</span>(<span class="number">3</span>).
+       
+       <span class="keyword">PROCEDURE</span> <span class="keyword">DIVISION</span>.
+       <span class="function">MAIN-PROCEDURE</span>.
+           <span class="comment">      * Obtener fecha actual</span>
+           <span class="keyword">ACCEPT</span> <span class="variable">WS-FECHA</span> <span class="keyword">FROM</span> <span class="keyword">DATE</span> <span class="keyword">YYYYMMDD</span>
+           
+           <span class="comment">      * Preparar y enviar request</span>
+           <span class="keyword">PERFORM</span> <span class="function">SEND-REQUEST</span>
+           
+           <span class="comment">      * Verificar respuesta</span>
+           <span class="keyword">IF</span> <span class="variable">WS-HTTP-STATUS</span> = <span class="number">200</span>
+               <span class="keyword">DISPLAY</span> <span class="string">"Factura creada exitosamente"</span>
+               <span class="keyword">DISPLAY</span> <span class="variable">WS-HTTP-RESPONSE</span>
+           <span class="keyword">ELSE</span>
+               <span class="keyword">DISPLAY</span> <span class="string">"Error al crear factura: "</span>
+               <span class="keyword">DISPLAY</span> <span class="variable">WS-HTTP-RESPONSE</span>
+           <span class="keyword">END-IF</span>
+           
+           <span class="keyword">STOP RUN</span>.
+       
+       <span class="function">SEND-REQUEST</span>.
+           <span class="comment">      * Aquí iría la implementación del request HTTP</span>
+           <span class="comment">      * usando la librería de HTTP disponible</span>
+           <span class="keyword">CALL</span> <span class="string">"HTTP-POST"</span> <span class="keyword">USING</span>
+               <span class="variable">WS-BASE-URL</span>
+               <span class="variable">WS-API-KEY</span>
+               <span class="variable">WS-FACTURA</span>
+               <span class="variable">WS-HTTP-RESPONSE</span>
+               <span class="variable">WS-HTTP-STATUS</span>
+           <span class="keyword">END-CALL</span>.
+</pre>
+                        </div>
+                        <div id="access-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">' Ejemplo con Microsoft Access VBA</span>
+<span class="keyword">Option Compare</span> Database
+<span class="keyword">Option Explicit</span>
+
+<span class="keyword">Private Type</span> <span class="class">FiscalConfig</span>
+    <span class="variable">ApiKey</span> <span class="keyword">As String</span>
+    <span class="variable">BaseUrl</span> <span class="keyword">As String</span>
+<span class="keyword">End Type</span>
+
+<span class="keyword">Private</span> <span class="variable">m_Config</span> <span class="keyword">As</span> <span class="class">FiscalConfig</span>
+
+<span class="keyword">Public Function</span> <span class="function">CrearFactura</span>() <span class="keyword">As String</span>
+    <span class="keyword">On Error GoTo</span> <span class="variable">ErrorHandler</span>
+    
+    <span class="keyword">Dim</span> <span class="variable">xmlHttp</span> <span class="keyword">As Object</span>
+    <span class="keyword">Dim</span> <span class="variable">jsonBody</span> <span class="keyword">As String</span>
+    <span class="keyword">Dim</span> <span class="variable">response</span> <span class="keyword">As String</span>
+    
+    <span class="comment">' Inicializar configuración</span>
+    <span class="variable">m_Config</span>.<span class="variable">ApiKey</span> = <span class="string">"TU_API_KEY"</span>
+    <span class="variable">m_Config</span>.<span class="variable">BaseUrl</span> = <span class="string">"https://api.fiscal.service/v1"</span>
+    
+    <span class="comment">' Crear objeto para request HTTP</span>
+    <span class="keyword">Set</span> <span class="variable">xmlHttp</span> = <span class="function">CreateObject</span>(<span class="string">"MSXML2.XMLHTTP"</span>)
+    
+    <span class="comment">' Preparar JSON de la factura</span>
+    <span class="variable">jsonBody</span> = <span class="string">"{"</span> & _
+        <span class="string">"""tipo_comprobante"": ""A"", "</span> & _
+        <span class="string">"""punto_venta"": 1, "</span> & _
+        <span class="string">"""concepto"": 1, "</span> & _
+        <span class="string">"""doc_tipo"": 80, "</span> & _
+        <span class="string">"""doc_nro"": ""30712345678"", "</span> & _
+        <span class="string">"""fecha"": """</span> & <span class="function">Format</span>(<span class="function">Date</span>, <span class="string">"yyyy-mm-dd"</span>) & <span class="string">""", "</span> & _
+        <span class="string">"""imp_total"": 1000.00, "</span> & _
+        <span class="string">"""imp_neto"": 826.45, "</span> & _
+        <span class="string">"""imp_iva"": 173.55"</span> & _
+    <span class="string">"}"</span>
+    
+    <span class="comment">' Enviar request</span>
+    <span class="variable">xmlHttp</span>.<span class="function">Open</span> <span class="string">"POST"</span>, <span class="variable">m_Config</span>.<span class="variable">BaseUrl</span> & <span class="string">"/comprobantes"</span>, <span class="keyword">False</span>
+    <span class="variable">xmlHttp</span>.<span class="function">setRequestHeader</span> <span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>
+    <span class="variable">xmlHttp</span>.<span class="function">setRequestHeader</span> <span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> & <span class="variable">m_Config</span>.<span class="variable">ApiKey</span>
+    <span class="variable">xmlHttp</span>.<span class="function">send</span> <span class="variable">jsonBody</span>
+    
+    <span class="comment">' Procesar respuesta</span>
+    <span class="keyword">If</span> <span class="variable">xmlHttp</span>.<span class="variable">Status</span> = <span class="number">200</span> <span class="keyword">Then</span>
+        <span class="function">CrearFactura</span> = <span class="variable">xmlHttp</span>.<span class="variable">responseText</span>
+        
+        <span class="comment">' Opcional: Guardar en tabla de Access</span>
+        <span class="keyword">Call</span> <span class="function">GuardarFacturaEnDB</span>(<span class="variable">xmlHttp</span>.<span class="variable">responseText</span>)
+    <span class="keyword">Else</span>
+        <span class="keyword">Err.Raise</span> <span class="variable">xmlHttp</span>.<span class="variable">Status</span>, <span class="string">"CrearFactura"</span>, <span class="variable">xmlHttp</span>.<span class="variable">responseText</span>
+    <span class="keyword">End If</span>
+    
+    <span class="keyword">Exit Function</span>
+
+<span class="variable">ErrorHandler</span>:
+    <span class="function">CrearFactura</span> = <span class="string">"Error: "</span> & <span class="function">Err.Description</span>
+<span class="keyword">End Function</span>
+
+<span class="keyword">Private Sub</span> <span class="function">GuardarFacturaEnDB</span>(<span class="variable">jsonResponse</span> <span class="keyword">As String</span>)
+    <span class="keyword">Dim</span> <span class="variable">db</span> <span class="keyword">As</span> <span class="class">DAO.Database</span>
+    <span class="keyword">Dim</span> <span class="variable">rs</span> <span class="keyword">As</span> <span class="class">DAO.Recordset</span>
+    
+    <span class="keyword">Set</span> <span class="variable">db</span> = <span class="function">CurrentDb</span>()
+    <span class="keyword">Set</span> <span class="variable">rs</span> = <span class="variable">db</span>.<span class="function">OpenRecordset</span>(<span class="string">"Facturas"</span>)
+    
+    <span class="keyword">With</span> <span class="variable">rs</span>
+        .<span class="function">AddNew</span>
+        !<span class="variable">fecha</span> = <span class="function">Date</span>
+        !<span class="variable">respuesta_api</span> = <span class="variable">jsonResponse</span>
+        .<span class="function">Update</span>
+    <span class="keyword">End With</span>
+    
+    <span class="variable">rs</span>.<span class="function">Close</span>
+    <span class="keyword">Set</span> <span class="variable">rs</span> = <span class="keyword">Nothing</span>
+    <span class="keyword">Set</span> <span class="variable">db</span> = <span class="keyword">Nothing</span>
+<span class="keyword">End Sub</span>
+
+<span class="comment">' Ejemplo de uso desde un formulario</span>
+<span class="keyword">Private Sub</span> <span class="function">btnCrearFactura_Click</span>()
+    <span class="keyword">Dim</span> <span class="variable">resultado</span> <span class="keyword">As String</span>
+    <span class="variable">resultado</span> = <span class="function">CrearFactura</span>()
+    <span class="function">MsgBox</span> <span class="variable">resultado</span>, <span class="variable">vbInformation</span>, <span class="string">"Resultado"</span>
+<span class="keyword">End Sub</span></pre>
+                        </div>
+                        <div id="excel-code" class="code-tab hidden">
+                            <pre class="vscode-code font-mono text-sm whitespace-pre-wrap bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto">
+<span class="comment">' Ejemplo con Excel VBA</span>
+<span class="keyword">Option Explicit</span>
+
+<span class="keyword">Private Type</span> <span class="class">FiscalConfig</span>
+    <span class="variable">ApiKey</span> <span class="keyword">As String</span>
+    <span class="variable">BaseUrl</span> <span class="keyword">As String</span>
+<span class="keyword">End Type</span>
+
+<span class="keyword">Private</span> <span class="variable">m_Config</span> <span class="keyword">As</span> <span class="class">FiscalConfig</span>
+
+<span class="keyword">Public Function</span> <span class="function">CrearFactura</span>(<span class="variable">ws</span> <span class="keyword">As</span> <span class="class">Worksheet</span>) <span class="keyword">As String</span>
+    <span class="keyword">On Error GoTo</span> <span class="variable">ErrorHandler</span>
+    
+    <span class="keyword">Dim</span> <span class="variable">xmlHttp</span> <span class="keyword">As Object</span>
+    <span class="keyword">Dim</span> <span class="variable">jsonBody</span> <span class="keyword">As String</span>
+    <span class="keyword">Dim</span> <span class="variable">response</span> <span class="keyword">As String</span>
+    <span class="keyword">Dim</span> <span class="variable">lastRow</span> <span class="keyword">As Long</span>
+    
+    <span class="comment">' Inicializar configuración</span>
+    <span class="variable">m_Config</span>.<span class="variable">ApiKey</span> = <span class="string">"TU_API_KEY"</span>
+    <span class="variable">m_Config</span>.<span class="variable">BaseUrl</span> = <span class="string">"https://api.fiscal.service/v1"</span>
+    
+    <span class="comment">' Obtener última fila con datos</span>
+    <span class="variable">lastRow</span> = ws.<span class="function">Cells</span>(ws.<span class="variable">Rows</span>.<span class="variable">Count</span>, <span class="string">"A"</span>).<span class="function">End</span>(xlUp).<span class="variable">Row</span>
+    
+    <span class="comment">' Crear objeto para request HTTP</span>
+    <span class="keyword">Set</span> <span class="variable">xmlHttp</span> = <span class="function">CreateObject</span>(<span class="string">"MSXML2.XMLHTTP"</span>)
+    
+    <span class="comment">' Preparar JSON de la factura</span>
+    <span class="variable">jsonBody</span> = <span class="string">"{"</span> & _
+        <span class="string">"""tipo_comprobante"": ""A"", "</span> & _
+        <span class="string">"""punto_venta"": "</span> & ws.<span class="function">Range</span>(<span class="string">"B2"</span>).<span class="variable">Value</span> & <span class="string">", "</span> & _
+        <span class="string">"""concepto"": "</span> & ws.<span class="function">Range</span>(<span class="string">"C2"</span>).<span class="variable">Value</span> & <span class="string">", "</span> & _
+        <span class="string">"""doc_tipo"": "</span> & ws.<span class="function">Range</span>(<span class="string">"D2"</span>).<span class="variable">Value</span> & <span class="string">", "</span> & _
+        <span class="string">"""doc_nro"": """</span> & ws.<span class="function">Range</span>(<span class="string">"E2"</span>).<span class="variable">Value</span> & <span class="string">""", "</span> & _
+        <span class="string">"""fecha"": """</span> & <span class="function">Format</span>(<span class="function">Date</span>, <span class="string">"yyyy-mm-dd"</span>) & <span class="string">""", "</span> & _
+        <span class="string">"""imp_total"": "</span> & ws.<span class="function">Range</span>(<span class="string">"F2"</span>).<span class="variable">Value</span> & <span class="string">", "</span> & _
+        <span class="string">"""imp_neto"": "</span> & ws.<span class="function">Range</span>(<span class="string">"G2"</span>).<span class="variable">Value</span> & <span class="string">", "</span> & _
+        <span class="string">"""imp_iva"": "</span> & ws.<span class="function">Range</span>(<span class="string">"H2"</span>).<span class="variable">Value</span> & <span class="string">"}"</span>
+    
+    <span class="comment">' Enviar request</span>
+    <span class="variable">xmlHttp</span>.<span class="function">Open</span> <span class="string">"POST"</span>, <span class="variable">m_Config</span>.<span class="variable">BaseUrl</span> & <span class="string">"/comprobantes"</span>, <span class="keyword">False</span>
+    <span class="variable">xmlHttp</span>.<span class="function">setRequestHeader</span> <span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>
+    <span class="variable">xmlHttp</span>.<span class="function">setRequestHeader</span> <span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> & <span class="variable">m_Config</span>.<span class="variable">ApiKey</span>
+    <span class="variable">xmlHttp</span>.<span class="function">send</span> <span class="variable">jsonBody</span>
+    
+    <span class="comment">' Procesar respuesta</span>
+    <span class="keyword">If</span> <span class="variable">xmlHttp</span>.<span class="variable">Status</span> = <span class="number">200</span> <span class="keyword">Then</span>
+        <span class="function">CrearFactura</span> = <span class="variable">xmlHttp</span>.<span class="variable">responseText</span>
+        
+        <span class="comment">' Guardar respuesta en la hoja</span>
+        ws.<span class="function">Range</span>(<span class="string">"I"</span> & <span class="variable">lastRow</span> + <span class="number">1</span>).<span class="variable">Value</span> = <span class="string">"CAE: "</span> & <span class="function">ParseJSON</span>(<span class="variable">xmlHttp</span>.<span class="variable">responseText</span>)
+    <span class="keyword">Else</span>
+        <span class="keyword">Err.Raise</span> <span class="variable">xmlHttp</span>.<span class="variable">Status</span>, <span class="string">"CrearFactura"</span>, <span class="variable">xmlHttp</span>.<span class="variable">responseText</span>
+    <span class="keyword">End If</span>
+    
+    <span class="keyword">Exit Function</span>
+
+<span class="variable">ErrorHandler</span>:
+    <span class="function">CrearFactura</span> = <span class="string">"Error: "</span> & <span class="function">Err.Description</span>
+<span class="keyword">End Function</span>
+
+<span class="keyword">Private Function</span> <span class="function">ParseJSON</span>(<span class="variable">jsonString</span> <span class="keyword">As String</span>) <span class="keyword">As String</span>
+    <span class="comment">' Función simple para extraer el CAE del JSON</span>
+    <span class="keyword">Dim</span> <span class="variable">regex</span> <span class="keyword">As Object</span>
+    <span class="keyword">Set</span> <span class="variable">regex</span> = <span class="function">CreateObject</span>(<span class="string">"VBScript.RegExp"</span>)
+    
+    <span class="variable">regex</span>.<span class="variable">Pattern</span> = <span class="string">"""cae"":""(\d+)"""</span>
+    <span class="variable">regex</span>.<span class="variable">Global</span> = <span class="keyword">True</span>
+    
+    <span class="keyword">If</span> <span class="variable">regex</span>.<span class="function">Test</span>(<span class="variable">jsonString</span>) <span class="keyword">Then</span>
+        <span class="function">ParseJSON</span> = <span class="variable">regex</span>.<span class="function">Execute</span>(<span class="variable">jsonString</span>)(<span class="number">0</span>).<span class="variable">SubMatches</span>(<span class="number">0</span>)
+    <span class="keyword">End If</span>
+<span class="keyword">End Function</span>
+
+<span class="comment">' Ejemplo de uso desde una macro</span>
+<span class="keyword">Sub</span> <span class="function">GenerarFactura</span>()
+    <span class="keyword">Dim</span> <span class="variable">ws</span> <span class="keyword">As</span> <span class="class">Worksheet</span>
+    <span class="keyword">Dim</span> <span class="variable">resultado</span> <span class="keyword">As String</span>
+    
+    <span class="keyword">Set</span> <span class="variable">ws</span> = <span class="class">ThisWorkbook</span>.<span class="variable">ActiveSheet</span>
+    <span class="variable">resultado</span> = <span class="function">CrearFactura</span>(<span class="variable">ws</span>)
+    
+    <span class="function">MsgBox</span> <span class="variable">resultado</span>, <span class="variable">vbInformation</span>, <span class="string">"Resultado"</span>
+<span class="keyword">End Sub</span></pre>
                         </div>
                     </div>
                 </div>
