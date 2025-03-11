@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pasarela Fiscal</title>
-        <link rel="icon" href="img/api.png">
+        <link rel="icon" href="img/api2.png">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -16,7 +16,9 @@
         <!-- Header -->
         <header class="border-b border-gray-800 fixed w-full bg-gray-950 z-50">
             <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div class="text-2xl font-bold">Fiscal API</div>
+                <div class="text-2xl font-bold flex items-center gap-2">
+                    <img src="img/api2.png" alt="API Logo" class="h-9 w-auto">
+                    Fiscal API</div>
                 <div class="flex gap-6 items-center">
                     <a href="#features" class="nav-link text-gray-300 hover:text-white">Características</a>
                     <a href="#docs" class="nav-link text-gray-300 hover:text-white">Documentación</a>
@@ -1091,7 +1093,7 @@ ls_resultado = ln_api.<span class="function">crear_factura</span>()
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold mb-12 text-center text-white">Planes y Precios</h2>
                 <div class="text-center mb-12">
-                    <p class="inline-block bg-blue-600 text-3xl text-white px-4 py-2 rounded-lg mb-8">Tarifas vigentes al 21/02/2025</p>
+                    <p class="inline-block bg-blue-600 text-3xl text-white px-4 py-2 rounded-lg mb-8" id="tarifas-vigentes">Tarifas vigentes al 21/02/2025</p>
                     <p class=" text-xl text-gray-300 font-bold mb-6"><i class="fas fa-check-circle text-blue-500 mr-2"></i>Prueba gratuita por 15 días sin compromiso de compra</p>
                     <p class="text-xl text-gray-300 mb-6"><i class="fas fa-code text-blue-500 mr-2"></i>SDK nativo para Visual FoxPro disponible y personalizable</p>
                     <p class="text-2xl text-blue-400"><i class="fas fa-flask text-blue-500 mr-2"></i>Ambiente de Homologación disponible a partir del 28/02/2025</p>

@@ -1,13 +1,16 @@
 /* Estilos base para el contenedor de código */
 .vscode-code {
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
     line-height: 1.5;
     tab-size: 4;
     background-color: #1e1e1e;
+    color: #d4d4d4;
     padding: 1rem;
     border-radius: 0.5rem;
     overflow-x: auto;
     text-align: left;
+    margin: 0;
 }
 
 /* Eliminar el padding extra de los elementos pre */
@@ -19,30 +22,40 @@
 /* Colores de sintaxis al estilo VS Code */
 .vscode-code .comment {
     color: #6A9955;
+    font-style: italic;
 }
 
 .vscode-code .string {
-    color: #CE9178;
+    color: #ce9178;
 }
 
 .vscode-code .number {
-    color: #B5CEA8;
+    color: #b5cea8;
 }
 
 .vscode-code .keyword {
-    color: #569CD6;
+    color: #569cd6;
+    font-weight: bold;
 }
 
 .vscode-code .function {
-    color: #DCDCAA;
+    color: #dcdcaa;
 }
 
 .vscode-code .variable {
-    color: #9CDCFE;
+    color: #9cdcfe;
 }
 
 .vscode-code .class {
-    color: #4EC9B0;
+    color: #4ec9b0;
+}
+
+.vscode-code .operator {
+    color: #d4d4d4;
+}
+
+.vscode-code .punctuation {
+    color: #d4d4d4;
 }
 
 /* Scrollbar personalizada al estilo VS Code */
@@ -57,6 +70,10 @@
     border: 3px solid #1e1e1e;
 }
 
+.vscode-code::-webkit-scrollbar-thumb:hover {
+    background-color: #4f4f4f;
+}
+
 .vscode-code::-webkit-scrollbar-track {
     background-color: #1e1e1e;
 }
@@ -67,20 +84,55 @@
     border: 1px solid #333;
     border-radius: 6px;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .code-container .code-header {
     background-color: #252526;
     padding: 0.5rem 1rem;
     border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
 }
 
 /* Animación para cambios de pestaña */
 .code-tab {
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .code-tab.active {
     opacity: 1;
+}
+
+/* Resaltado de línea */
+.vscode-code .line:hover {
+    background-color: #2d2d2d;
+}
+
+/* Selección de texto */
+.vscode-code ::selection {
+    background-color: #264f78;
+}
+
+/* Estilo para las pestañas de código */
+.code-tab-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: #969696;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px 4px 0 0;
+}
+
+.code-tab-btn:hover {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+.code-tab-btn.active {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-bottom: 2px solid #007acc;
 } 

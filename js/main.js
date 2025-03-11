@@ -51,6 +51,17 @@ $(document).ready(function() {
             $('.nav-link').removeClass('text-blue-300');
         }
     });
+
+    // Actualizar fecha de tarifas vigentes
+    const actualizarFechaVigencia = () => {
+        const fecha = new Date();
+        const dia = fecha.getDate().toString().padStart(2, '0');
+        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+        const año = fecha.getFullYear();
+        $('#tarifas-vigentes').text(`Tarifas vigentes al ${dia}/${mes}/${año}`);
+    };
+    
+    actualizarFechaVigencia();
 });
 
 document.addEventListener('DOMContentLoaded', function() {
